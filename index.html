@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Security Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="#">
+      <span class="brand-mark">P</span>
+      <span>Password<span class="brand-light">Checker</span></span>
+    </a>
+    <nav>
+      <a href="#analyzer">Analyzer</a>
+      <a href="#generator">Generator</a>
+      <a href="#saveBox">Save</a>
+      <a href="#records">Records</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="privacy-note">
+      <span class="privacy-icon">!</span>
+      <p><strong>Note:</strong> Saved accounts are stored unencrypted in Local Storage. Use demo passwords only.</p>
+    </div>
+
+    <div class="tools-grid">
+
+      <section class="panel analyzer-panel" id="analyzer">
+        <div class="panel-heading">
+          <div class="panel-icon purple-icon">&#10003;</div>
+          <h2>Password analyzer</h2>
+        </div>
+
+        <label for="passwordInput">Password</label>
+        <div class="input-row">
+          <input type="password" id="passwordInput" placeholder="Type a password to test" autocomplete="off" spellcheck="false">
+          <button type="button" id="toggleBtn" class="button button-muted">Show</button>
+          <button type="button" id="analyzerCopyBtn" class="button button-muted">Copy</button>
+        </div>
+
+        <div class="strength-summary">
+          <span>Strength level</span>
+          <strong id="strengthText">None</strong>
+        </div>
+        <div class="bar" id="strengthBar">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="crack-time">
+          <span>Estimated time to crack</span>
+          <strong id="crackTime">-</strong>
+        </div>
+
+        <h3>Password rules</h3>
+        <ul class="rules-grid" id="rulesList">
+          <li id="ruleLength">At least 8 characters</li>
+          <li id="ruleUpper">Has an uppercase letter (A-Z)</li>
+          <li id="ruleLower">Has a lowercase letter (a-z)</li>
+          <li id="ruleNumber">Has a number (0-9)</li>
+          <li id="ruleSpecial">Has a special character</li>
+        </ul>
+
+        <div class="suggestions">
+          <h3>Tips</h3>
+          <ul id="warningsList">
+            <li>Type a password to see tips.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel generator-panel" id="generator">
+        <div class="panel-heading">
+          <div class="panel-icon green-icon">&#8635;</div>
+          <h2>Password generator</h2>
+        </div>
+
+        <label for="generatedPassword">Generated password</label>
+        <div class="input-row">
+          <input type="text" id="generatedPassword" readonly placeholder="Click generate" autocomplete="off" spellcheck="false">
+          <button type="button" id="copyBtn" class="button button-muted">Copy</button>
+        </div>
+
+        <label for="lengthInput">Length</label>
+        <div class="stepper">
+          <button type="button" id="lengthMinus" class="button button-muted" aria-label="Decrease length">&minus;</button>
+          <input type="number" id="lengthInput" min="6" max="32" value="12">
+          <button type="button" id="lengthPlus" class="button button-muted" aria-label="Increase length">+</button>
+          <span class="stepper-hint">6 to 32</span>
+        </div>
+
+        <h3>Characters</h3>
+        <div class="options">
+          <label class="option"><input type="checkbox" id="optUpper" checked>Uppercase letters</label>
+          <label class="option"><input type="checkbox" id="optNumbers" checked>Numbers</label>
+          <label class="option"><input type="checkbox" id="optSymbols" checked>Symbols</label>
+        </div>
+
+        <div class="button-row">
+          <button type="button" id="generateBtn" class="button button-primary">Generate</button>
+          <button type="button" id="useBtn" class="button button-outline">Test this password</button>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="records-grid">
+
+      <section class="panel save-panel" id="saveBox">
+        <div class="panel-heading">
+          <div class="panel-icon orange-icon">+</div>
+          <h2>Save an account</h2>
+        </div>
+
+        <form id="saveForm">
+          <label for="siteName">Website or app name</label>
+          <input type="text" id="siteName" placeholder="e.g. Facebook" autocomplete="off" required>
+
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="e.g. user123" autocomplete="off" required>
+
+          <label for="demoPassword">Demo password</label>
+          <input type="password" id="demoPassword" placeholder="Enter a demo password" autocomplete="new-password" required>
+
+          <button type="submit" id="saveBtn" class="button button-primary">Save</button>
+        </form>
+      </section>
+
+      <section class="panel records-panel" id="records">
+        <div class="panel-heading">
+          <div class="panel-icon blue-icon">&#8801;</div>
+          <h2>Saved accounts</h2>
+        </div>
+
+        <label class="visually-hidden" for="searchBox">Search by website or username</label>
+        <div class="search-wrap">
+          <input type="text" id="searchBox" placeholder="Search by website or username" autocomplete="off">
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Website / app</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recordsBody">
+              <tr>
+                <td colspan="4">No accounts saved yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <a class="brand" href="#">
+      <span class="brand-mark">P</span>
+      <span>Password<span class="brand-light">Checker</span></span>
+    </a>
+    <p>&copy; 2026 PasswordChecker</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
